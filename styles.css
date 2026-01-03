@@ -184,7 +184,7 @@ body {
     width: 100%;
     height: 100vh;
     background-color: rgba(0, 0, 0, 0.5);
-    z-index: 998;
+    z-index: 1001;
     opacity: 0;
     transition: opacity 0.3s ease;
     pointer-events: none;
@@ -205,7 +205,7 @@ body {
     height: 100vh;
     max-height: 1024px;
     background-color: #1E1823;
-    z-index: 999;
+    z-index: 1002;
     overflow-y: auto;
     overflow-x: hidden;
     transform: translateX(100%);
@@ -490,6 +490,7 @@ body {
     width: 38px;
     height: 38px;
     flex-shrink: 0;
+    cursor: pointer;
 }
 
 /* Benefits Section */
@@ -887,11 +888,13 @@ body {
     flex-wrap: nowrap;
     width: 100%;
     max-width: 1136px;
-    overflow-x: hidden;
+    overflow-x: auto;
     overflow-y: hidden;
     scroll-behavior: smooth;
     scrollbar-width: none;
     -ms-overflow-style: none;
+    padding: 10px 0;
+    scroll-snap-type: x mandatory;
 }
 
 .products-grid::-webkit-scrollbar {
@@ -907,31 +910,34 @@ body {
     background-color: #FFFFFF;
     border: 1px solid rgba(17, 17, 17, 0.1);
     border-radius: clamp(10px, 1.25vw, 15px);
-    position: relative;
-    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 32px 20px;
+    scroll-snap-align: start;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.3s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
 .product-card img {
-    position: absolute;
-    top: 32px;
-    left: 20px;
     width: 230px;
     height: 201px;
     object-fit: contain;
+    margin-bottom: 8px;
 }
 
 .product-info {
-    position: absolute;
-    top: 241px;
-    left: 50%;
-    transform: translateX(-50%);
     text-align: center;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 2px;
-    width: max-content;
-    max-width: 100%;
+    width: 100%;
+    margin-bottom: 18px;
 }
 
 .product-info h3 {
@@ -942,7 +948,6 @@ body {
     text-transform: uppercase;
     color: #111111;
     margin: 0;
-    text-align: center;
     white-space: nowrap;
 }
 
@@ -953,15 +958,10 @@ body {
     letter-spacing: -0.02em;
     color: rgba(17, 17, 17, 0.7);
     margin: 0;
-    text-align: center;
     white-space: nowrap;
 }
 
 .product-price {
-    position: absolute;
-    top: 299px;
-    left: 50%;
-    transform: translateX(-50%);
     padding: 8px 20px;
     background-color: #FAFAFA;
     border: 1px solid rgba(17, 17, 17, 0.1);
@@ -993,7 +993,8 @@ body {
     gap: 13px;
     justify-content: center;
     align-items: center;
-    margin-top: 20px;
+    margin-top: 32px;
+    padding: 10px 0;
 }
 
 .pagination-dot {
@@ -1002,9 +1003,28 @@ body {
     border-radius: 50%;
     background-color: rgba(17, 17, 17, 0.1);
     cursor: pointer;
-    transition: all 0.3s;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     user-select: none;
     -webkit-user-select: none;
+    position: relative;
+}
+
+.pagination-dot::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+    background-color: var(--primary-color);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.pagination-dot:hover::before {
+    opacity: 0.3;
 }
 
 .pagination-dot.active {
@@ -1013,12 +1033,18 @@ body {
     background-color: var(--primary-color);
 }
 
+.pagination-dot.active::before {
+    display: none;
+}
+
 .pagination-dot:hover {
     background-color: rgba(17, 17, 17, 0.2);
+    transform: scale(1.1);
 }
 
 .pagination-dot.active:hover {
     background-color: var(--primary-color);
+    transform: scale(1);
 }
 
 /* Top Sellers Section */
@@ -1112,11 +1138,16 @@ body {
     display: flex;
     gap: 28px;
     justify-content: center;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
+    overflow: hidden;
+    width: 100%;
+    max-width: 1136px;
+    padding-top: 50px;
 }
 
 .review-card {
     width: 360px;
+    min-width: 360px;
     height: 242px;
     background-color: #FFFFFF;
     border: 1px solid rgba(17, 17, 17, 0.1);
@@ -1130,6 +1161,13 @@ body {
     text-align: center;
     position: relative;
     overflow: visible;
+    flex-shrink: 0;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.review-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 15px 35px rgba(215, 228, 249, 0.4);
 }
 
 .review-avatar {
@@ -1143,6 +1181,8 @@ body {
     transform: translateX(-50%);
     z-index: 1;
     flex-shrink: 0;
+    border: 3px solid #FFFFFF;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .review-avatar img {
@@ -1192,6 +1232,7 @@ body {
     gap: 13px;
     justify-content: center;
     align-items: center;
+    padding: 10px 0;
 }
 
 .reviews .btn {
@@ -1204,9 +1245,12 @@ body {
 /* Subscribe Section */
 .subscribe {
     position: relative;
-    height: 370px;
+    min-height: 370px;
     margin-top: 50px;
     overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .subscribe-background {
@@ -1241,8 +1285,9 @@ body {
     flex-direction: column;
     align-items: center;
     gap: 24px;
-    padding: 72px 0;
+    padding: 72px 20px;
     text-align: center;
+    width: 100%;
 }
 
 .subscribe-text {
@@ -1255,10 +1300,11 @@ body {
 .subscribe-text h2 {
     font-weight: 600;
     font-size: 24px;
-    line-height: 1.17;
+    line-height: 1.1666666666666667em;
     letter-spacing: -0.03em;
     text-transform: uppercase;
     color: var(--text-light);
+    margin: 0;
 }
 
 .subscribe-text p {
@@ -1399,7 +1445,12 @@ html {
 }
 
 /* Fluid Typography */
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     font-size: clamp(1rem, 2vw, 1.5rem);
 }
 
@@ -1589,7 +1640,7 @@ p {
         left: 10px;
         max-width: calc(100% - 20px);
     }
-    
+
     .video-modal-content,
     .review-modal-content {
         padding: 20px;
@@ -1601,32 +1652,32 @@ p {
     .container {
         padding: 0 20px;
     }
-    
+
     .hero {
         max-width: calc(100% - 56px);
         margin: 50px 28px 0;
     }
-    
+
     .hero-blocks {
         width: calc(100% - 80px);
         left: 40px;
     }
-    
+
     .hero-buttons {
         gap: 20px;
         flex-wrap: wrap;
     }
-    
+
     .hero-title {
         width: 100%;
         max-width: 484px;
     }
-    
+
     .benefits {
         height: auto;
         min-height: 344px;
     }
-    
+
     .benefits-grid {
         width: calc(100% - 100px);
         max-width: 1100px;
@@ -1635,39 +1686,39 @@ p {
         gap: 40px;
         margin: 50px auto;
     }
-    
+
     .benefit-item {
         height: auto;
         min-height: 244px;
     }
-    
+
     .benefit-divider {
         display: none;
     }
-    
+
     .ingredients-cards {
         width: 100%;
         max-width: 1136px;
         flex-wrap: wrap;
         justify-content: center;
     }
-    
+
     .how-content {
         flex-direction: column;
         align-items: center;
     }
-    
+
     .how-image,
     .how-steps {
         width: 100%;
         max-width: 600px;
     }
-    
+
     .top-sellers-text {
         gap: 20px;
         flex-direction: column;
     }
-    
+
     .footer-top {
         flex-direction: column;
     }
@@ -1728,12 +1779,12 @@ p {
         width: 32px;
         height: 32px;
     }
-    
+
     /* Mobile Menu for Tablet */
     .mobile-menu-overlay {
         display: block;
     }
-    
+
     .mobile-menu {
         display: block;
         width: 290px;
@@ -2142,17 +2193,19 @@ p {
         flex-wrap: nowrap;
         justify-content: center;
         display: flex;
+        overflow: hidden;
     }
 
     .review-card {
         width: calc(50% - 8px);
+        min-width: calc(50% - 8px);
         max-width: 344px;
         height: 242px;
         flex-shrink: 0;
     }
 
-    .review-card:nth-child(3) {
-        display: none;
+    .review-card:nth-child(n) {
+        display: flex;
     }
 
     .review-text p {
@@ -2160,32 +2213,54 @@ p {
     }
 
     .reviews-pagination {
-        display: none;
+        display: flex;
+        gap: 13px;
+        justify-content: center;
+        margin-top: 20px;
     }
 
     /* Subscribe Section */
     .subscribe {
-        height: 370px;
+        min-height: 370px;
+        height: auto;
         margin-top: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
     .subscribe-content {
-        padding: 72px 0;
+        padding: 40px 20px;
         gap: 24px;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
     }
 
     .subscribe-text {
         max-width: 467px;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
         gap: 24px;
     }
 
     .subscribe-text h2 {
         font-size: 24px;
-        width: 378px;
+        max-width: 378px;
+        width: 100%;
+        margin: 0 auto;
+        text-align: center;
     }
 
     .subscribe-text p {
-        width: 467px;
+        max-width: 467px;
+        width: 100%;
+        margin: 0 auto;
+        text-align: center;
     }
 
     /* Footer */
@@ -2237,12 +2312,14 @@ p {
 @media (max-width: 767px) {
     .container {
         max-width: 100%;
-        padding: 0 5.33vw; /* 20px на 375px */
+        padding: 0 5.33vw;
+        /* 20px на 375px */
     }
 
     /* Header */
     .header {
-        padding: 5.33vw 0; /* 20px на 375px */
+        padding: 5.33vw 0;
+        /* 20px на 375px */
     }
 
     .header-content {
@@ -2252,64 +2329,68 @@ p {
         gap: 10vw;
         width: 100%;
     }
-    
+
     .mobile-menu-overlay {
         display: block;
     }
-    
+
     .mobile-menu {
         display: block;
         width: 290px;
         max-width: 100vw;
     }
-    
+
     .mobile-menu-toggle {
         display: flex;
     }
 
     .logo {
-        gap: 1.07vw; /* 4px на 375px */
+        gap: 1.07vw;
+        /* 4px на 375px */
     }
 
     .logo-text {
-        font-size: 3.73vw; /* 14px на 375px */
+        font-size: 3.73vw;
+        /* 14px на 375px */
         line-height: 1.2857142857142858em;
     }
 
     .logo-icon {
-        width: 5.6vw; /* 21px на 375px */
+        width: 5.6vw;
+        /* 21px на 375px */
         height: 5.6vw;
     }
-    
+
     .nav {
         display: none;
     }
-    
+
     .nav-menu {
         display: none;
     }
-    
+
     .social-networks {
         display: none;
     }
 
     .mobile-menu-toggle {
         display: flex;
-        width: 7.47vw; /* 28px на 375px */
+        width: 7.47vw;
+        /* 28px на 375px */
         height: 7.47vw;
     }
-    
+
     .mobile-menu {
         display: block;
         width: 290px;
         max-width: 100vw;
     }
-    
+
     .mobile-menu .nav-menu {
         margin-left: 85px;
         margin-top: 156px;
     }
-    
+
     .mobile-menu-social {
         left: 32px;
         bottom: 24px;
@@ -2319,74 +2400,94 @@ p {
         width: 7.47vw;
         height: 7.47vw;
     }
-    
+
     /* Hero Section */
     .hero {
-        max-width: 89.33vw; /* 335px на 375px */
+        max-width: 89.33vw;
+        /* 335px на 375px */
         width: 89.33vw;
-        height: 165.33vw; /* 620px на 375px */
-        margin: 13.33vw auto 0; /* 50px на 375px */
-        border-radius: 8vw; /* 30px на 375px */
+        height: 165.33vw;
+        /* 620px на 375px */
+        margin: 13.33vw auto 0;
+        /* 50px на 375px */
+        border-radius: 8vw;
+        /* 30px на 375px */
     }
 
     .hero-blocks {
         position: absolute;
-        left: 5.33vw; /* 20px на 375px */
+        left: 5.33vw;
+        /* 20px на 375px */
         bottom: 5.33vw;
-        width: 78.67vw; /* 295px на 375px */
-        gap: 8.53vw; /* 32px на 375px */
+        width: 78.67vw;
+        /* 295px на 375px */
+        gap: 8.53vw;
+        /* 32px на 375px */
     }
 
     .hero-title {
-        font-size: 5.33vw; /* 20px на 375px */
+        font-size: 5.33vw;
+        /* 20px на 375px */
         line-height: 1.2em;
         width: 100%;
-        max-width: 78.67vw; /* 295px на 375px */
+        max-width: 78.67vw;
+        /* 295px на 375px */
         height: auto;
     }
 
     .hero-buttons {
         flex-direction: column;
         align-items: flex-start;
-        gap: 8.53vw; /* 32px на 375px */
+        gap: 8.53vw;
+        /* 32px на 375px */
         width: 100%;
         height: auto;
     }
 
     .buttons-group {
         width: 100%;
-        gap: 3.73vw; /* 14px на 375px */
+        gap: 3.73vw;
+        /* 14px на 375px */
         flex-wrap: wrap;
     }
 
     .btn {
-        padding: 3.2vw 7.47vw; /* 12px 28px на 375px */
-        font-size: 3.73vw; /* 14px на 375px */
+        padding: 3.2vw 7.47vw;
+        /* 12px 28px на 375px */
+        font-size: 3.73vw;
+        /* 14px на 375px */
         height: auto;
-        min-height: 10.93vw; /* 41px на 375px */
+        min-height: 10.93vw;
+        /* 41px на 375px */
     }
 
     .btn-outline {
-        width: 42.4vw; /* 159px на 375px */
+        width: 42.4vw;
+        /* 159px на 375px */
     }
 
     .scroll-indicator {
-        width: 28.53vw; /* 107px на 375px */
-        height: 7.47vw; /* 28px на 375px */
-        gap: 3.2vw; /* 12px на 375px */
-        font-size: 3.2vw; /* 12px на 375px */
+        width: 28.53vw;
+        /* 107px на 375px */
+        height: 7.47vw;
+        /* 28px на 375px */
+        gap: 3.2vw;
+        /* 12px на 375px */
+        font-size: 3.2vw;
+        /* 12px на 375px */
     }
 
     .scroll-indicator svg {
         width: 7.47vw;
         height: 7.47vw;
     }
-    
+
     /* Benefits Section */
     .benefits {
         height: auto;
         min-height: auto;
-        margin-top: 13.33vw; /* 50px на 375px */
+        margin-top: 13.33vw;
+        /* 50px на 375px */
     }
 
     .benefits-container {
@@ -2395,19 +2496,23 @@ p {
     }
 
     .benefits-grid {
-        width: 89.33vw; /* 335px на 375px */
+        width: 89.33vw;
+        /* 335px на 375px */
         flex-direction: column;
-        gap: 5.33vw; /* 20px на 375px */
-        margin: 5.33vw auto;
+        gap: 10.67vw;
+        /* 40px на 375px */
+        margin: 10.67vw auto;
         padding: 0 5.33vw;
     }
 
     .benefit-item {
         width: 100%;
-        max-width: 89.33vw; /* 335px на 375px */
+        max-width: 89.33vw;
+        /* 335px на 375px */
         height: auto;
         padding-right: 0;
-        gap: 4.8vw; /* 18px на 375px */
+        gap: 4.8vw;
+        /* 18px на 375px */
     }
 
     .benefit-item:last-child {
@@ -2419,119 +2524,153 @@ p {
 
     .benefit-content {
         width: 100%;
-        max-width: 82.13vw; /* 308px на 375px */
+        max-width: 82.13vw;
+        /* 308px на 375px */
         height: auto;
-        gap: 5.87vw; /* 22px на 375px */
+        gap: 7.47vw;
+        /* 28px на 375px */
     }
 
     .benefit-icon {
-        width: 16.53vw; /* 62px на 375px */
+        width: 16.53vw;
+        /* 62px на 375px */
         height: 16.53vw;
     }
 
     .benefit-text {
         width: 100%;
-        max-width: 82.13vw; /* 308px на 375px */
-        gap: 4.8vw; /* 18px на 375px */
+        max-width: 82.13vw;
+        /* 308px на 375px */
+        gap: 5.33vw;
+        /* 20px на 375px */
     }
 
     .benefit-text h3 {
-        font-size: 4.8vw; /* 18px на 375px */
+        font-size: 4.8vw;
+        /* 18px на 375px */
     }
 
     .benefit-text p {
-        font-size: 3.73vw; /* 14px на 375px */
+        font-size: 3.73vw;
+        /* 14px на 375px */
     }
 
     .benefit-divider {
         display: none;
     }
-    
+
     /* Ingredients Section */
     .ingredients {
-        margin-top: 42.13vw; /* 158px на 375px */
+        margin-top: 42.13vw;
+        /* 158px на 375px */
     }
 
     .ingredients .container {
-        max-width: 89.33vw; /* 335px на 375px */
+        max-width: 89.33vw;
+        /* 335px на 375px */
         padding: 0 5.33vw;
-        gap: 6.4vw; /* 24px на 375px */
+        gap: 6.4vw;
+        /* 24px на 375px */
     }
 
     .ingredients-content {
         width: 100%;
-        max-width: 89.33vw; /* 335px на 375px */
+        max-width: 89.33vw;
+        /* 335px на 375px */
         height: auto;
-        gap: 6.4vw; /* 24px на 375px */
+        gap: 6.4vw;
+        /* 24px на 375px */
     }
 
     .section-title {
-        font-size: 5.33vw; /* 20px на 375px */
+        font-size: 5.33vw;
+        /* 20px на 375px */
         width: 100%;
-        max-width: 75.47vw; /* 283px на 375px */
+        max-width: 75.47vw;
+        /* 283px на 375px */
         line-height: 1.2em;
     }
 
     .section-description {
         width: 100%;
-        max-width: 89.33vw; /* 335px на 375px */
-        font-size: 3.73vw; /* 14px на 375px */
+        max-width: 89.33vw;
+        /* 335px на 375px */
+        font-size: 3.73vw;
+        /* 14px на 375px */
         height: auto;
     }
 
     .ingredients-cards {
         width: 100%;
-        max-width: 89.33vw; /* 335px на 375px */
+        max-width: 89.33vw;
+        /* 335px на 375px */
         flex-direction: column;
-        gap: 5.33vw; /* 20px на 375px */
+        gap: 5.33vw;
+        /* 20px на 375px */
         display: flex;
     }
 
     .ingredient-card {
         width: 100%;
-        max-width: 89.33vw; /* 335px на 375px */
-        height: 72vw; /* 270px на 375px */
+        max-width: 89.33vw;
+        /* 335px на 375px */
+        height: 72vw;
+        /* 270px на 375px */
     }
 
     .ingredient-card img {
-        top: 7.47vw; /* 28px на 375px */
-        left: 14.93vw; /* 56px на 375px */
-        width: 59.73vw; /* 224px на 375px */
-        height: 45.6vw; /* 171px на 375px */
+        top: 7.47vw;
+        /* 28px на 375px */
+        left: 14.93vw;
+        /* 56px на 375px */
+        width: 59.73vw;
+        /* 224px на 375px */
+        height: 45.6vw;
+        /* 171px на 375px */
     }
 
     .ingredient-card h3 {
-        left: 7.47vw; /* 28px на 375px */
+        left: 7.47vw;
+        /* 28px на 375px */
         bottom: 7.47vw;
-        font-size: 3.73vw; /* 14px на 375px */
+        font-size: 3.73vw;
+        /* 14px на 375px */
     }
-    
+
     /* How It's Made Section */
     .how-its-made {
-        margin-top: 42.13vw; /* 158px на 375px */
-        padding: 13.33vw 0; /* 50px на 375px */
+        margin-top: 42.13vw;
+        /* 158px на 375px */
+        padding: 13.33vw 0;
+        /* 50px на 375px */
     }
 
     .how-its-made .container {
-        max-width: 89.33vw; /* 335px на 375px */
+        max-width: 89.33vw;
+        /* 335px на 375px */
         padding: 0 5.33vw;
     }
 
     .how-its-made .section-title {
-        font-size: 5.33vw; /* 20px на 375px */
-        margin-bottom: 8.53vw; /* 32px на 375px */
+        font-size: 5.33vw;
+        /* 20px на 375px */
+        margin-bottom: 8.53vw;
+        /* 32px на 375px */
     }
 
     .how-content {
         flex-direction: column;
-        gap: 5.33vw; /* 20px на 375px */
+        gap: 5.33vw;
+        /* 20px на 375px */
         width: 100%;
     }
 
     .how-image {
         width: 100%;
-        max-width: 89.33vw; /* 335px на 375px */
-        height: 133.33vw; /* 500px на 375px */
+        max-width: 89.33vw;
+        /* 335px на 375px */
+        height: 133.33vw;
+        /* 500px на 375px */
     }
 
     .play-button {
@@ -2541,63 +2680,81 @@ p {
     }
 
     .play-button svg {
-        width: 9.33vw; /* 35px на 375px */
+        width: 9.33vw;
+        /* 35px на 375px */
         height: 9.33vw;
     }
 
     .how-steps {
         width: 100%;
-        max-width: 89.33vw; /* 335px на 375px */
+        max-width: 89.33vw;
+        /* 335px на 375px */
         height: auto;
-        min-height: 121.6vw; /* 456px на 375px */
-        padding: 5.33vw; /* 20px на 375px */
+        min-height: 121.6vw;
+        /* 456px на 375px */
+        padding: 5.33vw;
+        /* 20px на 375px */
     }
 
     .how-steps h3 {
-        font-size: 4.8vw; /* 18px на 375px */
+        font-size: 4.8vw;
+        /* 18px на 375px */
         width: 100%;
-        max-width: 81.87vw; /* 307px на 375px */
-        margin-bottom: 5.33vw; /* 20px на 375px */
+        max-width: 81.87vw;
+        /* 307px на 375px */
+        margin-bottom: 5.33vw;
+        /* 20px на 375px */
     }
 
     .steps-list {
         width: 100%;
-        max-width: 81.87vw; /* 307px на 375px */
-        gap: 4.8vw; /* 18px на 375px */
+        max-width: 81.87vw;
+        /* 307px на 375px */
+        gap: 4.8vw;
+        /* 18px на 375px */
     }
 
     .step-item {
         width: 100%;
-        gap: 4.27vw; /* 16px на 375px */
+        gap: 4.27vw;
+        /* 16px на 375px */
     }
 
     .step-item p {
         width: 100%;
-        max-width: 77.6vw; /* 291px на 375px */
-        font-size: 3.73vw; /* 14px на 375px */
+        max-width: 77.6vw;
+        /* 291px на 375px */
+        font-size: 3.73vw;
+        /* 14px на 375px */
     }
 
     /* Products Section */
     .products {
-        margin-top: 42.13vw; /* 158px на 375px */
+        margin-top: 42.13vw;
+        /* 158px на 375px */
         padding: 0;
     }
 
     .products .container {
-        max-width: 89.33vw; /* 335px на 375px */
+        max-width: 89.33vw;
+        /* 335px на 375px */
         padding: 0 5.33vw;
-        gap: 8.53vw; /* 32px на 375px */
+        gap: 8.53vw;
+        /* 32px на 375px */
     }
 
     .products .section-title {
-        font-size: 5.33vw; /* 20px на 375px */
+        font-size: 5.33vw;
+        /* 20px на 375px */
     }
 
     .products-grid {
         width: 100%;
-        max-width: 89.33vw; /* 335px на 375px */
+        max-width: 89.33vw;
+        /* 335px на 375px */
         flex-direction: row;
-        gap: 5.33vw; /* 20px на 375px */
+        gap: 5.33vw;
+        /* 20px на 375px */
         align-items: center;
         flex-wrap: nowrap;
         justify-content: flex-start;
@@ -2614,268 +2771,364 @@ p {
     }
 
     .product-card {
-        width: 89.33vw; /* 335px на 375px */
+        width: 89.33vw;
+        /* 335px на 375px */
         min-width: 89.33vw;
         max-width: 89.33vw;
-        height: 97.07vw; /* 364px на 375px */
+        height: 97.07vw;
+        /* 364px на 375px */
         flex-shrink: 0;
     }
 
     .product-card img {
-        top: 8.53vw; /* 32px на 375px */
-        left: 5.33vw; /* 20px на 375px */
-        width: 61.33vw; /* 230px на 375px */
-        height: 53.6vw; /* 201px на 375px */
+        top: 8.53vw;
+        /* 32px на 375px */
+        left: 5.33vw;
+        /* 20px на 375px */
+        width: 61.33vw;
+        /* 230px на 375px */
+        height: 53.6vw;
+        /* 201px на 375px */
     }
 
     .product-info {
-        top: 64.27vw; /* 241px на 375px */
+        top: 64.27vw;
+        /* 241px на 375px */
     }
 
     .product-info h3 {
-        font-size: 4.8vw; /* 18px на 375px */
+        font-size: 4.8vw;
+        /* 18px на 375px */
     }
 
     .product-info p {
-        font-size: 3.2vw; /* 12px на 375px */
+        font-size: 3.2vw;
+        /* 12px на 375px */
     }
 
     .product-price {
-        top: 79.73vw; /* 299px на 375px */
-        padding: 2.13vw 5.33vw; /* 8px 20px на 375px */
-        font-size: 3.73vw; /* 14px на 375px */
-        min-width: 25.07vw; /* 94px на 375px */
+        top: 79.73vw;
+        /* 299px на 375px */
+        padding: 2.13vw 5.33vw;
+        /* 8px 20px на 375px */
+        font-size: 3.73vw;
+        /* 14px на 375px */
+        min-width: 25.07vw;
+        /* 94px на 375px */
     }
 
     .products-pagination {
-        gap: 3.47vw; /* 13px на 375px */
-        margin-top: 5.33vw; /* 20px на 375px */
+        gap: 3.47vw;
+        /* 13px на 375px */
+        margin-top: 5.33vw;
+        /* 20px на 375px */
     }
 
     .pagination-dot {
-        width: 3.47vw; /* 13px на 375px */
+        width: 3.47vw;
+        /* 13px на 375px */
         height: 3.47vw;
     }
 
     .pagination-dot.active {
-        width: 7.47vw; /* 28px на 375px */
+        width: 7.47vw;
+        /* 28px на 375px */
     }
 
     /* Top Sellers Section */
     .top-sellers {
-        margin-top: 42.13vw; /* 158px на 375px */
+        margin-top: 42.13vw;
+        /* 158px на 375px */
         padding: 0;
     }
 
     .top-sellers .container {
-        max-width: 89.33vw; /* 335px на 375px */
+        max-width: 89.33vw;
+        /* 335px на 375px */
         padding: 0 5.33vw;
     }
 
     .top-sellers .section-title {
-        font-size: 5.33vw; /* 20px на 375px */
-        margin-bottom: 8.53vw; /* 32px на 375px */
+        font-size: 5.33vw;
+        /* 20px на 375px */
+        margin-bottom: 8.53vw;
+        /* 32px на 375px */
     }
 
     .top-sellers-content {
-        gap: 8.53vw; /* 32px на 375px */
+        gap: 8.53vw;
+        /* 32px на 375px */
     }
 
     .top-sellers-images {
         flex-direction: column;
-        gap: 5.33vw; /* 20px на 375px */
+        gap: 5.33vw;
+        /* 20px на 375px */
         width: 100%;
     }
 
     .top-sellers-images img {
         width: 100%;
-        max-width: 89.33vw; /* 335px на 375px */
-        height: 123.73vw; /* 464px на 375px */
+        max-width: 89.33vw;
+        /* 335px на 375px */
+        height: 123.73vw;
+        /* 464px на 375px */
     }
 
     .top-sellers-text {
         flex-direction: column;
-        gap: 5.33vw; /* 20px на 375px */
+        gap: 5.33vw;
+        /* 20px на 375px */
         width: 100%;
         height: auto;
     }
 
     .top-sellers-text p {
         width: 100%;
-        max-width: 81.6vw; /* 306px на 375px */
-        font-size: 3.73vw; /* 14px на 375px */
+        max-width: 81.6vw;
+        /* 306px на 375px */
+        font-size: 3.73vw;
+        /* 14px на 375px */
     }
 
     .top-sellers-text .btn {
-        width: 32vw; /* 120px на 375px */
-        height: 10.93vw; /* 41px на 375px */
-        padding: 3.2vw 7.47vw; /* 12px 28px на 375px */
+        width: 32vw;
+        /* 120px на 375px */
+        height: 10.93vw;
+        /* 41px на 375px */
+        padding: 3.2vw 7.47vw;
+        /* 12px 28px на 375px */
     }
 
     /* Reviews Section */
     .reviews {
-        margin-top: 42.13vw; /* 158px на 375px */
+        margin-top: 42.13vw;
+        /* 158px на 375px */
         padding: 0;
     }
 
     .reviews .container {
-        max-width: 89.33vw; /* 335px на 375px */
+        max-width: 89.33vw;
+        /* 335px на 375px */
         padding: 0 5.33vw;
     }
 
     .reviews .section-title {
-        font-size: 5.33vw; /* 20px на 375px */
+        font-size: 5.33vw;
+        /* 20px на 375px */
         width: 100%;
-        max-width: 71.47vw; /* 268px на 375px */
-        margin-bottom: 8.53vw; /* 32px на 375px */
+        max-width: 71.47vw;
+        /* 268px на 375px */
+        margin-bottom: 8.53vw;
+        /* 32px на 375px */
     }
 
     .reviews-content {
-        gap: 5.33vw; /* 20px на 375px */
-        margin-top: 8.53vw; /* 32px на 375px */
+        gap: 5.33vw;
+        /* 20px на 375px */
+        margin-top: 8.53vw;
+        /* 32px на 375px */
         margin-bottom: 8.53vw;
     }
 
     .reviews-cards {
-        flex-direction: column;
-        gap: 5.33vw; /* 20px на 375px */
+        flex-direction: row;
+        gap: 5.33vw;
+        /* 20px на 375px */
         width: 100%;
         height: auto;
+        overflow: hidden;
+        padding-top: 13.33vw;
+        /* ~50px на 375px */
     }
 
     .review-card {
         width: 100%;
-        max-width: 89.33vw; /* 335px на 375px */
-        height: 64.53vw; /* 242px на 375px */
-        padding-top: 10.67vw; /* 40px на 375px */
+        min-width: 100%;
+        max-width: 89.33vw;
+        /* 335px на 375px */
+        height: auto;
+        min-height: 64.53vw;
+        /* 242px на 375px */
+        padding-top: 10.67vw;
+        /* 40px на 375px */
+        padding-bottom: 5.33vw;
     }
 
     .review-avatar {
-        width: 21.33vw; /* 80px на 375px */
+        width: 21.33vw;
+        /* 80px на 375px */
         height: 21.33vw;
-        top: -10.67vw; /* -40px на 375px */
+        top: -10.67vw;
+        /* -40px на 375px */
     }
 
     .review-author {
-        font-size: 4.8vw; /* 18px на 375px */
-        margin-bottom: 4.8vw; /* 18px на 375px */
+        font-size: 4.8vw;
+        /* 18px на 375px */
+        margin-bottom: 4.8vw;
+        /* 18px на 375px */
     }
 
     .review-text {
-        padding: 0 4.8vw; /* 18px на 375px */
+        padding: 0 4.8vw;
+        /* 18px на 375px */
     }
 
     .review-text p {
-        font-size: 3.73vw; /* 14px на 375px */
+        font-size: 3.73vw;
+        /* 14px на 375px */
         width: 100%;
-        max-width: 79.73vw; /* 299px на 375px */
+        max-width: 79.73vw;
+        /* 299px на 375px */
     }
 
     .reviews-pagination {
         display: flex;
-        gap: 3.47vw; /* 13px на 375px */
+        gap: 3.47vw;
+        /* 13px на 375px */
+        margin-top: 5.33vw;
     }
 
     .reviews .btn {
-        width: 100%;
-        max-width: 29.07vw; /* 109px на 375px */
-        height: 10.93vw; /* 41px на 375px */
-        padding: 3.2vw 7.47vw; /* 12px 28px на 375px */
-        font-size: 3.73vw; /* 14px на 375px */
+        width: auto;
+        max-width: none;
+        height: 10.93vw;
+        /* 41px на 375px */
+        padding: 3.2vw 7.47vw;
+        /* 12px 28px на 375px */
+        font-size: 3.73vw;
+        /* 14px на 375px */
+        min-width: 40vw;
     }
 
     /* Subscribe Section */
     .subscribe {
-        height: 98.67vw; /* 370px на 375px */
-        margin-top: 42.13vw; /* 158px на 375px */
+        min-height: 98.67vw;
+        /* 370px на 375px */
+        height: auto;
+        margin-top: 42.13vw;
+        /* 158px на 375px */
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
     .subscribe-content {
-        padding: 16.53vw 0; /* 62px на 375px */
-        gap: 6.4vw; /* 24px на 375px */
+        padding: 16.53vw 5.33vw;
+        /* 62px 20px на 375px */
+        gap: 6.4vw;
+        /* 24px на 375px */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
     }
 
     .subscribe-text {
-        max-width: 89.33vw; /* 335px на 375px */
-        gap: 6.4vw; /* 24px на 375px */
+        max-width: 89.33vw;
+        /* 335px на 375px */
+        gap: 6.4vw;
+        /* 24px на 375px */
     }
 
     .subscribe-text h2 {
-        font-size: 5.33vw; /* 20px на 375px */
+        font-size: 5.33vw;
+        /* 20px на 375px */
         width: 100%;
-        max-width: 77.6vw; /* 291px на 375px */
+        max-width: 77.6vw;
+        /* 291px на 375px */
     }
 
     .subscribe-text p {
         width: 100%;
-        max-width: 86.93vw; /* 326px на 375px */
-        font-size: 3.73vw; /* 14px на 375px */
+        max-width: 86.93vw;
+        /* 326px на 375px */
+        font-size: 3.73vw;
+        /* 14px на 375px */
     }
 
     .subscribe .btn {
         width: auto;
-        height: 10.93vw; /* 41px на 375px */
-        padding: 3.2vw 7.47vw; /* 12px 28px на 375px */
+        height: 10.93vw;
+        /* 41px на 375px */
+        padding: 3.2vw 7.47vw;
+        /* 12px 28px на 375px */
     }
 
     /* Footer */
     .footer {
-        padding: 13.33vw 0; /* 50px на 375px */
-        min-height: 117.33vw; /* 440px на 375px */
+        padding: 13.33vw 0;
+        /* 50px на 375px */
+        min-height: 117.33vw;
+        /* 440px на 375px */
     }
 
     .footer .container {
         max-width: 100%;
-        padding: 0 5.33vw; /* 20px на 375px */
+        padding: 0 5.33vw;
+        /* 20px на 375px */
     }
 
     .footer-top {
         flex-direction: column;
-        gap: 8.53vw; /* 32px на 375px */
+        gap: 8.53vw;
+        /* 32px на 375px */
         margin-bottom: 8.53vw;
     }
 
     .footer-slogan {
         width: 100%;
-        max-width: 80vw; /* 300px на 375px */
+        max-width: 80vw;
+        /* 300px на 375px */
     }
 
     .footer-slogan h3 {
-        font-size: 6.4vw; /* 24px на 375px */
+        font-size: 6.4vw;
+        /* 24px на 375px */
         line-height: 1.1666666666666667em;
         width: 100%;
     }
 
     .footer-right {
         flex-direction: column;
-        gap: 3.73vw; /* 14px на 375px */
+        gap: 3.73vw;
+        /* 14px на 375px */
         width: 100%;
     }
 
     .footer-contact {
         width: 100%;
-        max-width: 43.73vw; /* 164px на 375px */
+        max-width: 43.73vw;
+        /* 164px на 375px */
     }
 
     .footer-social {
-        gap: 3.73vw; /* 14px на 375px */
-        width: 15.47vw; /* 58px на 375px */
+        gap: 3.73vw;
+        /* 14px на 375px */
+        width: 15.47vw;
+        /* 58px на 375px */
     }
 
     .footer-divider {
-        margin-top: 59.73vw; /* 224px на 375px */
-        width: 89.33vw; /* 335px на 375px */
+        margin-top: 59.73vw;
+        /* 224px на 375px */
+        width: 89.33vw;
+        /* 335px на 375px */
     }
 
     .footer-nav {
         flex-direction: column;
-        gap: 4.8vw; /* 18px на 375px */
-        margin-top: 8.53vw; /* 32px на 375px */
-        width: 32vw; /* 120px на 375px */
+        gap: 4.8vw;
+        /* 18px на 375px */
+        margin-top: 8.53vw;
+        /* 32px на 375px */
+        width: 32vw;
+        /* 120px на 375px */
     }
 
     .footer-nav a {
-        font-size: 3.73vw; /* 14px на 375px */
+        font-size: 3.73vw;
+        /* 14px на 375px */
     }
 }
-

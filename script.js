@@ -10,10 +10,10 @@ const createMobileMenu = () => {
         const overlay = document.createElement('div');
         overlay.className = 'mobile-menu-overlay';
         body.appendChild(overlay);
-        
+
         const mobileMenu = document.createElement('div');
         mobileMenu.className = 'mobile-menu';
-        
+
         // Create close button
         const closeButton = document.createElement('button');
         closeButton.className = 'mobile-menu-close';
@@ -23,15 +23,15 @@ const createMobileMenu = () => {
                 <path d="M9.33337 9.33337L22.6667 22.6667M22.6667 9.33337L9.33337 22.6667" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
         `;
-        
+
         // Create menu container
         const menuContainer = document.createElement('div');
         menuContainer.className = 'mobile-menu-content';
-        
+
         // Create navigation menu from scratch
         const navMenu = document.createElement('ul');
         navMenu.className = 'nav-menu';
-        
+
         // Get menu items from original menu
         const originalNavMenu = document.querySelector('.nav-menu');
         if (originalNavMenu) {
@@ -56,7 +56,7 @@ const createMobileMenu = () => {
                 { text: 'Top sellers', href: '#top-sellers' },
                 { text: 'Chocolate is loved', href: '#reviews' }
             ];
-            
+
             menuItems.forEach(item => {
                 const li = document.createElement('li');
                 const a = document.createElement('a');
@@ -66,28 +66,28 @@ const createMobileMenu = () => {
                 navMenu.appendChild(li);
             });
         }
-        
+
         // Create social networks container
         const socialContainer = document.createElement('div');
         socialContainer.className = 'mobile-menu-social';
-        
+
         const originalSocial = document.querySelector('.social-networks');
         if (originalSocial) {
             const socialLinks = originalSocial.querySelectorAll('a');
             const socialNetworks = document.createElement('div');
             socialNetworks.className = 'social-networks';
-            
+
             socialLinks.forEach(link => {
                 const newLink = link.cloneNode(true);
                 socialNetworks.appendChild(newLink);
             });
-            
+
             socialContainer.appendChild(socialNetworks);
         } else {
             // Fallback: create social networks manually
             const socialNetworks = document.createElement('div');
             socialNetworks.className = 'social-networks';
-            
+
             // Instagram
             const instagramLink = document.createElement('a');
             instagramLink.href = '#';
@@ -98,7 +98,7 @@ const createMobileMenu = () => {
                 </svg>
             `;
             socialNetworks.appendChild(instagramLink);
-            
+
             // Twitter
             const twitterLink = document.createElement('a');
             twitterLink.href = '#';
@@ -109,18 +109,18 @@ const createMobileMenu = () => {
                 </svg>
             `;
             socialNetworks.appendChild(twitterLink);
-            
+
             socialContainer.appendChild(socialNetworks);
         }
-        
+
         menuContainer.appendChild(navMenu);
         menuContainer.appendChild(socialContainer);
-        
+
         mobileMenu.appendChild(closeButton);
         mobileMenu.appendChild(menuContainer);
-        
+
         body.appendChild(mobileMenu);
-        
+
         // Close handlers
         const closeMenu = () => {
             mobileMenu.classList.remove('active');
@@ -128,13 +128,13 @@ const createMobileMenu = () => {
             mobileMenuToggle.classList.remove('active');
             body.style.overflow = '';
         };
-        
+
         // Close button handler
         closeButton.addEventListener('click', closeMenu);
-        
+
         // Overlay click handler
         overlay.addEventListener('click', closeMenu);
-        
+
         // Add click handlers to mobile menu links
         mobileMenu.querySelectorAll('a[href^="#"]').forEach(link => {
             link.addEventListener('click', closeMenu);
@@ -147,11 +147,11 @@ if (mobileMenuToggle) {
     mobileMenuToggle.addEventListener('click', () => {
         createMobileMenu();
         const mobileMenu = document.querySelector('.mobile-menu');
-        
+
         if (mobileMenu) {
             const overlay = document.querySelector('.mobile-menu-overlay');
             const isActive = mobileMenu.classList.contains('active');
-            
+
             if (isActive) {
                 mobileMenu.classList.remove('active');
                 if (overlay) overlay.classList.remove('active');
@@ -238,14 +238,14 @@ if (playButton) {
         `;
         body.appendChild(modal);
         body.style.overflow = 'hidden';
-        
+
         // Close modal
         const closeBtn = modal.querySelector('.video-modal-close');
         closeBtn.addEventListener('click', () => {
             modal.remove();
             body.style.overflow = '';
         });
-        
+
         modal.addEventListener('click', (e) => {
             if (e.target === modal) {
                 modal.remove();
@@ -258,12 +258,12 @@ if (playButton) {
 // Product card hover effects
 const productCards = document.querySelectorAll('.product-card');
 productCards.forEach(card => {
-    card.addEventListener('mouseenter', function() {
+    card.addEventListener('mouseenter', function () {
         this.style.transform = 'translateY(-5px)';
         this.style.transition = 'transform 0.3s ease';
     });
-    
-    card.addEventListener('mouseleave', function() {
+
+    card.addEventListener('mouseleave', function () {
         this.style.transform = 'translateY(0)';
     });
 });
@@ -298,13 +298,13 @@ const header = document.querySelector('.header');
 
 window.addEventListener('scroll', () => {
     const currentScroll = window.pageYOffset;
-    
+
     if (currentScroll > 100) {
         header.classList.add('scrolled');
     } else {
         header.classList.remove('scrolled');
     }
-    
+
     lastScroll = currentScroll;
 });
 
@@ -332,11 +332,11 @@ buyNowButtons.forEach(button => {
             notification.className = 'notification';
             notification.textContent = 'Product added to cart!';
             body.appendChild(notification);
-            
+
             setTimeout(() => {
                 notification.classList.add('show');
             }, 10);
-            
+
             setTimeout(() => {
                 notification.classList.remove('show');
                 setTimeout(() => notification.remove(), 300);
@@ -352,17 +352,17 @@ productPrices.forEach(button => {
         const productCard = button.closest('.product-card');
         const productName = productCard.querySelector('.product-info h3')?.textContent || 'Product';
         const productPrice = button.textContent.trim();
-        
+
         // Create notification
         const notification = document.createElement('div');
         notification.className = 'notification';
         notification.textContent = `Added ${productName} (${productPrice}) to cart!`;
         body.appendChild(notification);
-        
+
         setTimeout(() => {
             notification.classList.add('show');
         }, 10);
-        
+
         setTimeout(() => {
             notification.classList.remove('show');
             setTimeout(() => notification.remove(), 300);
@@ -407,21 +407,21 @@ if (leaveReviewButton && leaveReviewButton.textContent.includes('Leave a review'
         `;
         body.appendChild(modal);
         body.style.overflow = 'hidden';
-        
+
         // Close modal
         const closeBtn = modal.querySelector('.review-modal-close');
         closeBtn.addEventListener('click', () => {
             modal.remove();
             body.style.overflow = '';
         });
-        
+
         modal.addEventListener('click', (e) => {
             if (e.target === modal) {
                 modal.remove();
                 body.style.overflow = '';
             }
         });
-        
+
         // Form submission
         const form = modal.querySelector('.review-form');
         form.addEventListener('submit', (e) => {
@@ -439,7 +439,7 @@ ingredientCards.forEach((card, index) => {
     card.style.opacity = '0';
     card.style.transform = 'scale(0.9)';
     card.style.transition = `opacity 0.6s ease ${index * 0.1}s, transform 0.6s ease ${index * 0.1}s`;
-    
+
     const cardObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -448,7 +448,7 @@ ingredientCards.forEach((card, index) => {
             }
         });
     }, observerOptions);
-    
+
     cardObserver.observe(card);
 });
 
@@ -464,272 +464,304 @@ window.addEventListener('scroll', () => {
     }
 });
 
-// Products pagination dots functionality
-const initProductsPagination = () => {
-    const productsPagination = document.querySelector('.products-pagination');
+// Products Slider functionality
+const initProductsSlider = () => {
+    const productsSection = document.querySelector('.products');
     const productsGrid = document.querySelector('.products-grid');
     const productCards = document.querySelectorAll('.product-card');
-    const paginationDots = document.querySelectorAll('.products-pagination .pagination-dot');
+    const paginationContainer = document.querySelector('.products-pagination');
 
-    if (!productsPagination || !productsGrid || paginationDots.length === 0 || productCards.length === 0) {
+    if (!productsGrid || productCards.length === 0) {
         return;
     }
 
-    // Prevent manual scrolling/swiping
-    let isProgrammaticScroll = false;
+    let currentPage = 0;
+    let touchStartX = 0;
+    let touchEndX = 0;
 
-    // Check if grid is scrollable (tablet/mobile)
-    const isScrollable = () => {
-        return productsGrid.scrollWidth > productsGrid.clientWidth;
-    };
-
-    // Calculate how many cards are visible at once
+    // Get visible cards count based on screen width
     const getVisibleCardsCount = () => {
         if (window.innerWidth >= 1200) {
-            return 4; // Desktop: 4 cards visible
+            return 4;
         } else if (window.innerWidth >= 768) {
-            return 2; // Tablet: 2 cards visible (with scroll)
+            return 2;
         } else {
-            return 1; // Mobile: 1 card visible
+            return 1;
         }
     };
 
-    // Get current active page based on scroll position
-    const getCurrentPage = () => {
-        if (!isScrollable()) {
-            // On desktop where cards wrap, calculate based on visible cards
-            const visibleCount = getVisibleCardsCount();
-            const firstVisibleIndex = Array.from(productCards).findIndex(card => {
-                const rect = card.getBoundingClientRect();
-                const gridRect = productsGrid.getBoundingClientRect();
-                return rect.left >= gridRect.left && rect.left < gridRect.right;
-            });
-            return Math.floor(Math.max(0, firstVisibleIndex) / visibleCount);
-        }
-        
-        const scrollLeft = productsGrid.scrollLeft;
-        const cardWidth = productCards[0]?.offsetWidth || 270;
-        // Get gap from computed styles or use default
-        const gridStyles = window.getComputedStyle(productsGrid);
-        const gapValue = gridStyles.gap || '18px';
-        const gap = parseFloat(gapValue) || 18;
-        const cardWithGap = cardWidth + gap;
+    // Calculate total pages
+    const getTotalPages = () => {
         const visibleCount = getVisibleCardsCount();
-        const page = Math.round(scrollLeft / (cardWithGap * visibleCount));
-        return Math.min(Math.max(0, page), paginationDots.length - 1);
-    };
-    
-    // Scroll to specific page
-    const scrollToPage = (pageIndex) => {
-        if (!productsGrid || !productCards.length) {
-            console.warn('Products grid or cards not found');
-            return;
-        }
-        
-        // Clamp page index
-        const maxPage = Math.max(0, paginationDots.length - 1);
-        const clampedIndex = Math.max(0, Math.min(pageIndex, maxPage));
-        
-        // Calculate scroll position for all devices
-        const cardWidth = productCards[0].offsetWidth || 270;
-        // Get gap from computed styles or use default
-        const gridStyles = window.getComputedStyle(productsGrid);
-        const gapValue = gridStyles.gap || '18px';
-        const gap = parseFloat(gapValue) || 18;
-        const cardWithGap = cardWidth + gap;
-        const visibleCount = getVisibleCardsCount();
-        const scrollPosition = clampedIndex * cardWithGap * visibleCount;
-        
-        // Mark as programmatic scroll
-        isProgrammaticScroll = true;
-        
-        // Enable scrolling temporarily for smooth scroll
-        productsGrid.style.overflowX = 'auto';
-        
-        productsGrid.scrollTo({
-            left: scrollPosition,
-            behavior: 'smooth'
-        });
-        
-        // Disable scrolling after animation (prevent manual swipe)
-        setTimeout(() => {
-            productsGrid.style.overflowX = 'hidden';
-            isProgrammaticScroll = false;
-        }, 500);
+        return Math.ceil(productCards.length / visibleCount);
     };
 
-    // Update active dot
-    const updateActiveDot = (activeIndex) => {
-        const clampedIndex = Math.max(0, Math.min(activeIndex, paginationDots.length - 1));
-        paginationDots.forEach((dot, index) => {
-            if (index === clampedIndex) {
-                dot.classList.add('active');
+    // Update pagination dots
+    const updatePagination = () => {
+        if (!paginationContainer) return;
+
+        const totalPages = getTotalPages();
+        paginationContainer.innerHTML = '';
+
+        for (let i = 0; i < totalPages; i++) {
+            const dot = document.createElement('span');
+            dot.className = `pagination-dot${i === currentPage ? ' active' : ''}`;
+            dot.addEventListener('click', () => goToPage(i));
+            paginationContainer.appendChild(dot);
+        }
+    };
+
+    // Go to specific page
+    const goToPage = (pageIndex) => {
+        const totalPages = getTotalPages();
+        currentPage = Math.max(0, Math.min(pageIndex, totalPages - 1));
+
+        const visibleCount = getVisibleCardsCount();
+        const cardWidth = productCards[0].offsetWidth;
+        const gap = parseFloat(window.getComputedStyle(productsGrid).gap) || 18;
+        const scrollPosition = currentPage * (cardWidth + gap) * visibleCount;
+
+        productsGrid.style.scrollBehavior = 'smooth';
+        productsGrid.scrollLeft = scrollPosition;
+
+        updatePagination();
+        updateCardsVisibility();
+    };
+
+    // Update cards visibility with animation
+    const updateCardsVisibility = () => {
+        const visibleCount = getVisibleCardsCount();
+        const startIndex = currentPage * visibleCount;
+        const endIndex = startIndex + visibleCount;
+
+        productCards.forEach((card, index) => {
+            if (index >= startIndex && index < endIndex) {
+                card.style.opacity = '1';
+                card.style.transform = 'scale(1)';
             } else {
-                dot.classList.remove('active');
+                card.style.opacity = '0.5';
+                card.style.transform = 'scale(0.95)';
             }
         });
     };
 
-    // Add click handlers to pagination dots
-    paginationDots.forEach((dot, index) => {
-        dot.style.cursor = 'pointer';
-        dot.addEventListener('click', (e) => {
-            e.preventDefault();
-            scrollToPage(index);
-            updateActiveDot(index);
-        });
-    });
-
-    // Prevent manual scrolling/swiping
-    productsGrid.addEventListener('touchstart', (e) => {
-        if (!isProgrammaticScroll) {
-            e.preventDefault();
-        }
-    }, { passive: false });
-    
-    productsGrid.addEventListener('touchmove', (e) => {
-        if (!isProgrammaticScroll) {
-            e.preventDefault();
-        }
-    }, { passive: false });
-    
-    productsGrid.addEventListener('wheel', (e) => {
-        if (!isProgrammaticScroll) {
-            e.preventDefault();
-        }
-    }, { passive: false });
-    
-    // Update active dot only when scrolling programmatically
-    let scrollTimeout;
-    const handleScroll = () => {
-        if (!isProgrammaticScroll) return;
-        clearTimeout(scrollTimeout);
-        scrollTimeout = setTimeout(() => {
-            const currentPage = getCurrentPage();
-            updateActiveDot(currentPage);
-        }, 100);
+    // Touch handlers for swipe
+    const handleTouchStart = (e) => {
+        touchStartX = e.touches[0].clientX;
     };
 
-    productsGrid.addEventListener('scroll', handleScroll);
+    const handleTouchMove = (e) => {
+        touchEndX = e.touches[0].clientX;
+    };
 
-    // Update on window resize
-    window.addEventListener('resize', () => {
-        const currentPage = getCurrentPage();
-        updateActiveDot(currentPage);
+    const handleTouchEnd = () => {
+        const swipeThreshold = 50;
+        const diff = touchStartX - touchEndX;
+
+        if (Math.abs(diff) > swipeThreshold) {
+            if (diff > 0) {
+                // Swipe left - next page
+                goToPage(currentPage + 1);
+            } else {
+                // Swipe right - previous page
+                goToPage(currentPage - 1);
+            }
+        }
+
+        touchStartX = 0;
+        touchEndX = 0;
+    };
+
+    // Add touch listeners
+    productsGrid.addEventListener('touchstart', handleTouchStart, { passive: true });
+    productsGrid.addEventListener('touchmove', handleTouchMove, { passive: true });
+    productsGrid.addEventListener('touchend', handleTouchEnd);
+
+    // Keyboard navigation
+    productsSection?.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft') {
+            goToPage(currentPage - 1);
+        } else if (e.key === 'ArrowRight') {
+            goToPage(currentPage + 1);
+        }
     });
 
-    // Initialize active dot
-    updateActiveDot(0);
+    // Handle resize
+    let resizeTimeout;
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(() => {
+            const totalPages = getTotalPages();
+            if (currentPage >= totalPages) {
+                currentPage = totalPages - 1;
+            }
+            updatePagination();
+            goToPage(currentPage);
+        }, 100);
+    });
+
+    // Initialize
+    updatePagination();
+    updateCardsVisibility();
+
+    // Add transition styles to cards
+    productCards.forEach(card => {
+        card.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+    });
 };
 
-// Initialize when DOM is ready
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initProductsPagination);
-} else {
-    initProductsPagination();
-}
+// Reviews Slider functionality  
+const initReviewsSlider = () => {
+    const reviewsSection = document.querySelector('.reviews');
+    const reviewsContainer = document.querySelector('.reviews-cards');
+    const reviewCards = document.querySelectorAll('.review-card');
+    const paginationContainer = document.querySelector('.reviews-pagination');
 
-// Reviews pagination dots functionality
-const initReviewsPagination = () => {
-    const reviewsPagination = document.querySelector('.reviews-pagination');
-    const reviewsCards = document.querySelectorAll('.review-card');
-    const reviewsPaginationDots = document.querySelectorAll('.reviews-pagination .pagination-dot');
-
-    if (!reviewsPagination || reviewsPaginationDots.length === 0 || reviewsCards.length === 0) {
+    if (!reviewsContainer || reviewCards.length === 0) {
         return;
     }
-    // Get visible cards count for reviews
-    const getVisibleReviewsCount = () => {
+
+    let currentPage = 0;
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    // Get visible cards count based on screen width
+    const getVisibleCardsCount = () => {
         if (window.innerWidth >= 1200) {
-            return 3; // Desktop: 3 cards visible
+            return 3;
         } else if (window.innerWidth >= 768) {
-            return 2; // Tablet: 2 cards visible
+            return 2;
         } else {
-            return 1; // Mobile: 1 card visible
+            return 1;
         }
     };
 
-    // Calculate total pages for reviews
-    const getTotalReviewPages = () => {
-        const visibleCount = getVisibleReviewsCount();
-        return Math.ceil(reviewsCards.length / visibleCount);
+    // Calculate total pages
+    const getTotalPages = () => {
+        const visibleCount = getVisibleCardsCount();
+        return Math.ceil(reviewCards.length / visibleCount);
     };
 
-    // Scroll to specific review page
-    const scrollToReviewPage = (pageIndex) => {
-        const reviewsContainer = document.querySelector('.reviews-cards');
-        if (!reviewsContainer || !reviewsCards.length) return;
+    // Update pagination dots
+    const updatePagination = () => {
+        if (!paginationContainer) return;
 
-        // For tablet and desktop, scroll horizontally
-        if (window.innerWidth >= 768) {
-            const cardWidth = reviewsCards[0]?.offsetWidth || 344;
-            const gap = window.innerWidth >= 1200 ? 28 : 16;
-            const cardWithGap = cardWidth + gap;
-            const visibleCount = getVisibleReviewsCount();
-            const scrollPosition = pageIndex * cardWithGap * visibleCount;
-            
-            // Scroll the reviews container into view if needed
-            reviewsContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-            
-            // If container is scrollable, scroll it
-            if (reviewsContainer.scrollWidth > reviewsContainer.clientWidth) {
-                reviewsContainer.scrollTo({
-                    left: scrollPosition,
-                    behavior: 'smooth'
-                });
-            } else {
-                // Scroll the page to show the card
-                const targetCard = reviewsCards[pageIndex * visibleCount];
-                if (targetCard) {
-                    targetCard.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
-                }
-            }
-        } else {
-            // For mobile, show/hide cards
-            const visibleCount = getVisibleReviewsCount();
-            const startIndex = pageIndex * visibleCount;
-            const endIndex = startIndex + visibleCount;
-            
-            reviewsCards.forEach((card, index) => {
-                if (index >= startIndex && index < endIndex) {
-                    card.style.display = 'flex';
-                } else {
-                    card.style.display = 'none';
-                }
-            });
+        const totalPages = getTotalPages();
+        paginationContainer.innerHTML = '';
+
+        for (let i = 0; i < totalPages; i++) {
+            const dot = document.createElement('span');
+            dot.className = `pagination-dot${i === currentPage ? ' active' : ''}`;
+            dot.addEventListener('click', () => goToPage(i));
+            paginationContainer.appendChild(dot);
         }
     };
 
-    // Update active review dot
-    const updateActiveReviewDot = (activeIndex) => {
-        reviewsPaginationDots.forEach((dot, index) => {
-            if (index === activeIndex) {
-                dot.classList.add('active');
+    // Go to specific page
+    const goToPage = (pageIndex) => {
+        const totalPages = getTotalPages();
+        currentPage = Math.max(0, Math.min(pageIndex, totalPages - 1));
+
+        updateCardsVisibility();
+        updatePagination();
+    };
+
+    // Update cards visibility with animation
+    const updateCardsVisibility = () => {
+        const visibleCount = getVisibleCardsCount();
+        const startIndex = currentPage * visibleCount;
+        const endIndex = startIndex + visibleCount;
+
+        reviewCards.forEach((card, index) => {
+            card.style.transition = 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
+
+            if (index >= startIndex && index < endIndex) {
+                card.style.display = 'flex';
+                card.style.opacity = '1';
+                card.style.transform = 'translateX(0) scale(1)';
+                card.style.pointerEvents = 'auto';
             } else {
-                dot.classList.remove('active');
+                card.style.opacity = '0';
+                card.style.transform = 'translateX(50px) scale(0.9)';
+                card.style.pointerEvents = 'none';
+                // Hide after animation
+                setTimeout(() => {
+                    if (card.style.opacity === '0') {
+                        card.style.display = 'none';
+                    }
+                }, 400);
             }
         });
     };
 
-    // Add click handlers to review pagination dots
-    reviewsPaginationDots.forEach((dot, index) => {
-        dot.style.cursor = 'pointer';
-        dot.addEventListener('click', (e) => {
-            e.preventDefault();
-            scrollToReviewPage(index);
-            updateActiveReviewDot(index);
-        });
+    // Touch handlers for swipe
+    const handleTouchStart = (e) => {
+        touchStartX = e.touches[0].clientX;
+    };
+
+    const handleTouchMove = (e) => {
+        touchEndX = e.touches[0].clientX;
+    };
+
+    const handleTouchEnd = () => {
+        const swipeThreshold = 50;
+        const diff = touchStartX - touchEndX;
+
+        if (Math.abs(diff) > swipeThreshold) {
+            if (diff > 0) {
+                // Swipe left - next page
+                goToPage(currentPage + 1);
+            } else {
+                // Swipe right - previous page
+                goToPage(currentPage - 1);
+            }
+        }
+
+        touchStartX = 0;
+        touchEndX = 0;
+    };
+
+    // Add touch listeners
+    reviewsContainer.addEventListener('touchstart', handleTouchStart, { passive: true });
+    reviewsContainer.addEventListener('touchmove', handleTouchMove, { passive: true });
+    reviewsContainer.addEventListener('touchend', handleTouchEnd);
+
+    // Keyboard navigation
+    reviewsSection?.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft') {
+            goToPage(currentPage - 1);
+        } else if (e.key === 'ArrowRight') {
+            goToPage(currentPage + 1);
+        }
     });
 
-    // Initialize active review dot
-    updateActiveReviewDot(0);
+    // Handle resize
+    let resizeTimeout;
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(() => {
+            const totalPages = getTotalPages();
+            if (currentPage >= totalPages) {
+                currentPage = totalPages - 1;
+            }
+            goToPage(currentPage);
+        }, 100);
+    });
+
+    // Initialize
+    updatePagination();
+    updateCardsVisibility();
 };
 
-// Initialize reviews pagination when DOM is ready
+// Initialize sliders when DOM is ready
 if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initReviewsPagination);
+    document.addEventListener('DOMContentLoaded', () => {
+        initProductsSlider();
+        initReviewsSlider();
+    });
 } else {
-    initReviewsPagination();
+    initProductsSlider();
+    initReviewsSlider();
 }
 
 // Lazy loading for images
